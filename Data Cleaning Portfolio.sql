@@ -119,7 +119,7 @@ SET SoldAsVacant = case
 
 
 
-				--REMOVE DUPLICATES
+				--REMOVE DUPLICATES   (This is not advisable because the deleted column might be useful in future)
 WITH RowNumCTE AS(
 SELECT*,
 	ROW_NUMBER() OVER (
