@@ -6,9 +6,19 @@ Cleaning Data in SQL Queries
 
 
 
-				--STANDARDIZE DATE FORMAT-- (To set the date in a more pleasant format)
+				--To check the entire file before starting the exploration
 
-SELECT SaleDate, CONVERT(DATE, SaleDate)
+SELECT *
+FROM NatshvilleHousing
+
+--Remove unwanted space before or inbetween the names
+SELECT TRIM([OwnerName])
+FROM NatshvilleHousing
+UPDATE NatshvilleHousing
+SET [OwnerName] = TRIM([OwnerName])
+
+
+SELECT SaleDate, CONVERT(DATE, SaleDate) AS Converted_Date
 FROM NatshvilleHousing
 
 UPDATE NatshvilleHousing
@@ -68,6 +78,9 @@ ADD PropertySplitCity nvarchar(255);
 UPDATE NatshvilleHousing
 SET PropertySplitCity = PARSENAME(REPLACE(PropertyAddress,',', '.'),1)
 
+SELECT *
+FROM NatshvilleHousing
+
 
 --FOR OWNERADDRESS
 SELECT
@@ -94,7 +107,8 @@ ADD OwnerSplitState nvarchar(255);
 UPDATE NatshvilleHousing
 SET OwnerSplitState = PARSENAME(REPLACE(OwnerAddress,',', '.'),1)
 
-
+SELECT *
+FROM NatshvilleHousing
 
 
 
@@ -112,9 +126,10 @@ UPDATE NatshvilleHousing
 SET SoldAsVacant = case
 	when SoldAsVacant = 'Y' then 'YES'
 	when SoldAsVacant = 'N' then 'NO'
+	when SoldAsVacant = 'Yes' then 'YES'
+	when SoldAsVacant = 'No' then 'NO'
 	ELSE SoldAsVacant
 	END
-
 
 
 
